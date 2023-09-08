@@ -116,6 +116,13 @@ class Parcel extends BaseResource
         return $this;
     }
 
+    public function undisclosedSender(): self
+    {
+        $this->options->undisclosed_sender = true;
+
+        return $this;
+    }
+
     /**
      * Set the shipment options for this parcel.
      *

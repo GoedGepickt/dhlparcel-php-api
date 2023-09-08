@@ -35,28 +35,24 @@ class ShipmentOptions extends BaseResource
 
     /** @var bool */
     public $signature;
-    /**
-     * @var bool
-     */
+
+    /** @var bool */
     public $same_day_delivery;
 
     /** @var bool */
     public $saturday_delivery;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     public $add_return_label;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     public $notify_recipient;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $notify_recipient_input;
+
+    /** @var bool */
+    public $undisclosed_sender;
 
     public function __construct(array $attributes = [])
     {
@@ -79,6 +75,7 @@ class ShipmentOptions extends BaseResource
         $this->add_return_label       = false;
         $this->notify_recipient       = false;
         $this->notify_recipient_input = '';
+        $this->undisclosed_sender     = false;
 
         return $this;
     }
@@ -196,6 +193,11 @@ class ShipmentOptions extends BaseResource
             ->when($this->saturday_delivery, function ($collection) {
                 return $collection->push([
                     'key' => 'S',
+                ]);
+            })
+            ->when($this->undisclosed_sender, function ($collection) {
+                return $collection->push([
+                    'key' => 'SSN',
                 ]);
             })
             ->all();

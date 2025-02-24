@@ -4,7 +4,7 @@ namespace Mvdnbrk\DhlParcel\Tests\Unit\Resources;
 
 use Mvdnbrk\DhlParcel\Resources\Shipment;
 use Mvdnbrk\DhlParcel\Tests\TestCase;
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 class ShipmentTest extends TestCase
 {

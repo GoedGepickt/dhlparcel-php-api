@@ -3,7 +3,7 @@
 namespace Mvdnbrk\DhlParcel\Resources;
 
 use Mvdnbrk\DhlParcel\Resources\Shipment as ShipmentResource;
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 class Shipment extends BaseResource
 {
@@ -16,7 +16,7 @@ class Shipment extends BaseResource
     /** @var string */
     public $label_id;
 
-    /** @var \Tightenco\Collect\Support\Collection */
+    /** @var \Illuminate\Support\Collection */
     public $pieces;
 
     /** @var ShipmentResource */

@@ -31,7 +31,7 @@ class CustomsGoodsItem extends BaseResource
         return $this;
     }
 
-    public function setDescriptionAttribute(array $value): self
+    public function setDescriptionAttribute(string $value): self
     {
         $this->description = $value;
 

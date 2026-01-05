@@ -19,6 +19,9 @@ class Parcel extends BaseResource
     /** @var \Mvdnbrk\DhlParcel\Resources\PiecesCollection */
     public $pieces;
 
+    /** @var EntrySummaryDeclaration|null */
+    public $entrySummaryDeclaration = null;
+
     public function __construct(array $attributes = [])
     {
         $this->options = new ShipmentOptions;
@@ -210,17 +213,34 @@ class Parcel extends BaseResource
         $this->reference_identifier = $value;
     }
 
+    /**
+     * @param EntrySummaryDeclaration|array|null $value
+     * @return self
+     */
+    public function setEntrySummaryDeclarationAttribute($value): self
+    {
+        if (is_array($value)) {
+            $value = new EntrySummaryDeclaration($value);
+        }
+
+        $this->entrySummaryDeclaration = $value;
+
+        return $this;
+    }
+
     public function toArray(): array
     {
         return collect([
-            'receiver' => $this->recipient->toArray(),
-            'shipper' => $this->sender->toArray(),
-            'options' => $this->options->toArray(),
-            'pieces' => $this->pieces->toArray(),
+            'receiver'                => $this->recipient->toArray(),
+            'shipper'                 => $this->sender->toArray(),
+            'options'                 => $this->options->toArray(),
+            'entrySummaryDeclaration' => $this->entrySummaryDeclaration ? $this->entrySummaryDeclaration->toArray() : null,
+            'pieces'                  => $this->pieces->toArray(),
         ])
-            ->when(! is_null($this->reference_identifier), function ($collection) {
-                return $collection->put('orderReference', (string) $this->reference_identifier);
+            ->when(!is_null($this->reference_identifier), function ($collection) {
+                return $collection->put('orderReference', (string)$this->reference_identifier);
             })
+            ->filter()
             ->all();
     }
 }

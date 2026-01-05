@@ -52,7 +52,11 @@ class CustomsGoodsItem extends BaseResource
         return $this;
     }
 
-    public function setValueAttribute(string $value): self
+    /**
+     * @param int|float $value
+     * @return $this
+     */
+    public function setValueAttribute($value): self
     {
         $this->value = $value;
 

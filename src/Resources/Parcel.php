@@ -230,12 +230,13 @@ class Parcel extends BaseResource
             'receiver'                => $this->recipient->toArray(),
             'shipper'                 => $this->sender->toArray(),
             'options'                 => $this->options->toArray(),
-            'entrySummaryDeclaration' => $this->entrySummaryDeclaration?->toArray(),
+            'entrySummaryDeclaration' => $this->entrySummaryDeclaration ? $this->entrySummaryDeclaration->toArray() : null,
             'pieces'                  => $this->pieces->toArray(),
         ])
             ->when(!is_null($this->reference_identifier), function ($collection) {
                 return $collection->put('orderReference', (string)$this->reference_identifier);
             })
+            ->filter()
             ->all();
     }
 }

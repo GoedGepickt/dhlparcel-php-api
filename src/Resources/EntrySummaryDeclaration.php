@@ -10,9 +10,9 @@ class EntrySummaryDeclaration extends BaseResource
     public $currency;
 
     /**
-     * @var Collection<array-key, CustomGoodsItem>
+     * @var Collection<array-key, CustomsGoodsItem>
      */
-    public $customGoods;
+    public $customsGoods;
 
     public function __construct(array $attributes = [])
     {
@@ -36,21 +36,21 @@ class EntrySummaryDeclaration extends BaseResource
     }
 
     /**
-     * @param  Collection<array-key, CustomGoodsItem>|array  $value
+     * @param  Collection<array-key, CustomsGoodsItem>|array  $value
      * @return $this
      */
-    public function setCustomGoodsAttribute($value): self
+    public function setCustomsGoodsAttribute($value): self
     {
         if (is_array($value)) {
             $value = collect($value);
         }
 
-        $this->customGoods = $value->map(function ($value) {
-            if ($value instanceof CustomGoodsItem) {
+        $this->customsGoods = $value->map(function ($value) {
+            if ($value instanceof CustomsGoodsItem) {
                 return $value;
             }
 
-            return new CustomGoodsItem($value);
+            return new CustomsGoodsItem($value);
         });
 
         return $this;
@@ -59,8 +59,8 @@ class EntrySummaryDeclaration extends BaseResource
     public function toArray(): array
     {
         return array_filter([
-            'currency'    => $this->currency,
-            'customGoods' => $this->customGoods->map(function ($item) {
+            'currency'     => $this->currency,
+            'customsGoods' => $this->customsGoods->map(function ($item) {
                 return $item->toArray();
             })->toArray(),
         ]);

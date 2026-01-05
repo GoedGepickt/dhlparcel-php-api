@@ -2,7 +2,7 @@
 
 namespace Mvdnbrk\DhlParcel\Resources;
 
-class CustomGoodsItem extends BaseResource
+class CustomsGoodsItem extends BaseResource
 {
     /** @var string */
     public $code;

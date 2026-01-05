@@ -36,12 +36,22 @@ class EntrySummaryDeclaration extends BaseResource
     }
 
     /**
-     * @param  Collection<array-key, CustomGoodsItem>  $value
+     * @param  Collection<array-key, CustomGoodsItem>|array  $value
      * @return $this
      */
-    public function setCustomGoodsAttribute(Collection $value): self
+    public function setCustomGoodsAttribute($value): self
     {
-        $this->customGoods = $value;
+        if (is_array($value)) {
+            $value = collect($value);
+        }
+
+        $this->customGoods = $value->map(function ($value) {
+            if ($value instanceof CustomGoodsItem) {
+                return $value;
+            }
+
+            return new CustomGoodsItem($value);
+        });
 
         return $this;
     }

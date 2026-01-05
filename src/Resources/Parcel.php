@@ -214,11 +214,15 @@ class Parcel extends BaseResource
     }
 
     /**
-     * @param EntrySummaryDeclaration|null $value
+     * @param EntrySummaryDeclaration|array|null $value
      * @return self
      */
-    public function setEntrySummaryDeclarationAttribute(?EntrySummaryDeclaration $value): self
+    public function setEntrySummaryDeclarationAttribute($value): self
     {
+        if (is_array($value)) {
+            $value = new EntrySummaryDeclaration($value);
+        }
+
         $this->entrySummaryDeclaration = $value;
 
         return $this;

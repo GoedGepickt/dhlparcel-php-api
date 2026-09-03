@@ -30,9 +30,9 @@ class Address extends BaseResource
     /** @var string */
     public $cc;
 
-    public function setAdditionAttribute(string $value): void
+    public function setAdditionAttribute(?string $value): void
     {
-        $this->number_suffix = $value;
+        $this->number_suffix = $value ?? '';
     }
 
     public function setCcAttribute(string $value): void

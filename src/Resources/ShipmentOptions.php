@@ -6,6 +6,18 @@ use Mvdnbrk\DhlParcel\Support\Str;
 
 class ShipmentOptions extends BaseResource
 {
+    /**
+     * DHL shipment option key for "delivery with code" (bezorgen met code).
+     *
+     * @see https://www.dhlecommerce.nl/nl/faq/wat-bezorgen-met-code
+     */
+    public const DELIVER_WITH_CODE_KEY = 'BMC';
+
+    /**
+     * DHL shipment option key for "limited quantities" of dangerous goods (gevaarlijke stoffen).
+     */
+    public const LIMITED_QUANTITY_KEY = 'LQ';
+
     /** @var string */
     protected $delivery_type;
 
@@ -54,6 +66,12 @@ class ShipmentOptions extends BaseResource
     /** @var bool */
     public $undisclosed_sender;
 
+    /** @var bool */
+    public $deliver_with_code;
+
+    /** @var bool */
+    public $limited_quantity;
+
     public function __construct(array $attributes = [])
     {
         $this->setDefaultOptions();
@@ -76,6 +94,8 @@ class ShipmentOptions extends BaseResource
         $this->notify_recipient       = false;
         $this->notify_recipient_input = '';
         $this->undisclosed_sender     = false;
+        $this->deliver_with_code      = false;
+        $this->limited_quantity       = false;
 
         return $this;
     }
@@ -198,6 +218,16 @@ class ShipmentOptions extends BaseResource
             ->when($this->undisclosed_sender, function ($collection) {
                 return $collection->push([
                     'key' => 'SSN',
+                ]);
+            })
+            ->when($this->deliver_with_code, function ($collection) {
+                return $collection->push([
+                    'key' => self::DELIVER_WITH_CODE_KEY,
+                ]);
+            })
+            ->when($this->limited_quantity, function ($collection) {
+                return $collection->push([
+                    'key' => self::LIMITED_QUANTITY_KEY,
                 ]);
             })
             ->all();

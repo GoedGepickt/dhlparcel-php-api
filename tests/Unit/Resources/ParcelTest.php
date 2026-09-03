@@ -212,6 +212,46 @@ class ParcelTest extends TestCase
     }
 
     /** @test */
+    public function it_can_set_a_parcel_to_be_delivered_with_a_code()
+    {
+        $parcel = new Parcel();
+
+        $this->assertFalse($parcel->options->deliver_with_code);
+
+        $parcel->deliverWithCode();
+
+        $this->assertTrue($parcel->options->deliver_with_code);
+    }
+
+    /** @test */
+    public function calling_the_deliver_with_code_method_returns_the_same_parcel_instance()
+    {
+        $parcel = new Parcel();
+
+        $this->assertSame($parcel, $parcel->deliverWithCode());
+    }
+
+    /** @test */
+    public function it_can_set_a_parcel_to_contain_limited_quantities()
+    {
+        $parcel = new Parcel();
+
+        $this->assertFalse($parcel->options->limited_quantity);
+
+        $parcel->limitedQuantity();
+
+        $this->assertTrue($parcel->options->limited_quantity);
+    }
+
+    /** @test */
+    public function calling_the_limited_quantity_method_returns_the_same_parcel_instance()
+    {
+        $parcel = new Parcel();
+
+        $this->assertSame($parcel, $parcel->limitedQuantity());
+    }
+
+    /** @test */
     public function it_can_set_a_parcel_to_be_a_mailbox_package()
     {
         $parcel = new Parcel();

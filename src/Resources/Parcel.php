@@ -126,6 +126,20 @@ class Parcel extends BaseResource
         return $this;
     }
 
+    public function deliverWithCode(): self
+    {
+        $this->options->deliver_with_code = true;
+
+        return $this;
+    }
+
+    public function limitedQuantity(): self
+    {
+        $this->options->limited_quantity = true;
+
+        return $this;
+    }
+
     /**
      * Set the shipment options for this parcel.
      *

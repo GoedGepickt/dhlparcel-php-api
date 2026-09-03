@@ -19,6 +19,8 @@ class ShipmentOptionsTest extends TestCase
         $this->assertFalse($options->only_recipient);
         $this->assertFalse($options->extra_assurance);
         $this->assertFalse($options->evening_delivery);
+        $this->assertFalse($options->deliver_with_code);
+        $this->assertFalse($options->limited_quantity);
     }
 
     /** @test */
@@ -178,6 +180,48 @@ class ShipmentOptionsTest extends TestCase
         $this->assertIsArray($array);
 
         $this->assertEquals(['key' => 'BP'], $array[0]);
+    }
+
+    /** @test */
+    public function to_array_with_deliver_with_code()
+    {
+        $options = new ShipmentOptions([
+            'deliver_with_code' => true,
+        ]);
+
+        $array = $options->toArray();
+
+        $this->assertIsArray($array);
+
+        $this->assertEquals([
+            [
+                'key' => 'DOOR',
+            ],
+            [
+                'key' => ShipmentOptions::DELIVER_WITH_CODE_KEY,
+            ],
+        ], $array);
+    }
+
+    /** @test */
+    public function to_array_with_limited_quantity()
+    {
+        $options = new ShipmentOptions([
+            'limited_quantity' => true,
+        ]);
+
+        $array = $options->toArray();
+
+        $this->assertIsArray($array);
+
+        $this->assertEquals([
+            [
+                'key' => 'DOOR',
+            ],
+            [
+                'key' => ShipmentOptions::LIMITED_QUANTITY_KEY,
+            ],
+        ], $array);
     }
 
     /** @test */

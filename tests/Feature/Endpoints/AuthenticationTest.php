@@ -2,8 +2,9 @@
 
 namespace Mvdnbrk\DhlParcel\Tests\Feature\Endpoints;
 
-use Lcobucci\JWT\Parser;
-use Lcobucci\JWT\ValidationData;
+use Lcobucci\JWT\Encoding\JoseEncoder;
+use Lcobucci\JWT\Token\Parser;
+use Lcobucci\JWT\UnencryptedToken;
 use Mvdnbrk\DhlParcel\Tests\TestCase;
 
 /** @group integration */
@@ -14,8 +15,9 @@ class AuthenticationTest extends TestCase
     {
         $accessToken = $this->client->authentication->getAccessToken();
 
-        $this->assertTrue(
-            (new Parser)->parse($accessToken->token)->validate(new ValidationData())
+        $this->assertInstanceOf(
+            UnencryptedToken::class,
+            (new Parser(new JoseEncoder))->parse($accessToken->token)
         );
         $this->assertFalse($accessToken->isExpired());
         $this->assertEquals(getenv('DHLPARCEL_ACCOUNT_ID'), $accessToken->getAccountId());

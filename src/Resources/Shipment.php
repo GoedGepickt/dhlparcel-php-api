@@ -16,6 +16,9 @@ class Shipment extends BaseResource
     /** @var string */
     public $label_id;
 
+    /** @var string|null */
+    public $customs_declaration_id;
+
     /** @var \Illuminate\Support\Collection */
     public $pieces;
 

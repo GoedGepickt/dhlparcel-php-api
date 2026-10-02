@@ -8,6 +8,9 @@ use Illuminate\Support\Collection;
  * Customs declaration sent along with a shipment (POST /shipments).
  * DHL generates the CN23 form or commercial invoice based on this data.
  *
+ * Field names follow the OpenAPI spec (https://api-gw.dhlparcel.nl/docs/combined.json). The guide
+ * lists the goods as "goods", but the spec and the API expect "customsGoods".
+ *
  * @see https://api-gw.dhlparcel.nl/docs/guide/chapters/04-labels.html
  */
 class CustomsDeclaration extends BaseResource
@@ -56,7 +59,7 @@ class CustomsDeclaration extends BaseResource
     /** @var bool|null */
     public $vat_reverse_charge;
 
-    /** @var array{currency: string, value: int|float|string}|null */
+    /** @var int|float|null Shipping fee when it is listed separately on the invoice. */
     public $shipping_fee;
 
     /** @var Collection<array-key, CustomsDeclarationGood> */
@@ -108,10 +111,9 @@ class CustomsDeclaration extends BaseResource
             'senderInboundVatNumber' => $this->sender_inbound_vat_number,
             'vatReverseCharge'       => $this->vat_reverse_charge,
             'shippingFee'            => $this->shipping_fee === null ? null : [
-                'currency' => (string) $this->shipping_fee['currency'],
-                'value'    => (string) $this->shipping_fee['value'],
+                'value' => round((float) $this->shipping_fee, 2),
             ],
-            'goods'                  => $this->goods->map(function (CustomsDeclarationGood $good) {
+            'customsGoods'           => $this->goods->map(function (CustomsDeclarationGood $good) {
                 return $good->toArray();
             })->all(),
         ])

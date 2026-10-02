@@ -28,7 +28,7 @@ class CustomsDeclarationGood extends BaseResource
     }
 
     /**
-     * The DHL API expects every field of a customs good as a string.
+     * Quantity, value and weight are numbers in the OpenAPI spec of POST /shipments.
      */
     public function toArray(): array
     {
@@ -36,9 +36,9 @@ class CustomsDeclarationGood extends BaseResource
             'code'        => (string) $this->code,
             'description' => (string) $this->description,
             'origin'      => strtoupper((string) $this->origin),
-            'quantity'    => (string) $this->quantity,
-            'value'       => (string) $this->value,
-            'weight'      => (string) $this->weight,
+            'quantity'    => (int) $this->quantity,
+            'value'       => round((float) $this->value, 2),
+            'weight'      => round((float) $this->weight, 3),
         ];
     }
 }

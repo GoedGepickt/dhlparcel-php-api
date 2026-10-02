@@ -18,7 +18,7 @@ class CustomsDeclarationTest extends TestCase
 
         $this->assertEquals('EUR', $declaration->currency);
         $this->assertCount(0, $declaration->goods);
-        $this->assertEquals(['currency' => 'EUR', 'goods' => []], $declaration->toArray());
+        $this->assertEquals(['currency' => 'EUR', 'customsGoods' => []], $declaration->toArray());
     }
 
     /** @test */
@@ -32,20 +32,20 @@ class CustomsDeclarationTest extends TestCase
             'export_reason' => CustomsDeclaration::EXPORT_REASON_SALE_OF_GOODS,
             'inco_terms' => 'DDU',
             'sender_inbound_vat_number' => 'GB123456789',
-            'shipping_fee' => ['currency' => 'CHF', 'value' => 4.95],
+            'shipping_fee' => 4.95,
             'goods' => [
                 [
                     'code' => '61091000',
                     'description' => 'T-shirt',
                     'origin' => 'nl',
                     'quantity' => 2,
-                    'value' => 39.9,
-                    'weight' => 0.4,
+                    'value' => 39.899,
+                    'weight' => 0.4004,
                 ],
             ],
         ]);
 
-        $this->assertEquals([
+        $this->assertSame([
             'currency' => 'CHF',
             'invoiceNumber' => 'INV-123',
             'invoiceType' => 'commercial',
@@ -53,15 +53,15 @@ class CustomsDeclarationTest extends TestCase
             'exportReason' => 'SaleOfGoods',
             'incoTerms' => 'DDU',
             'senderInboundVatNumber' => 'GB123456789',
-            'shippingFee' => ['currency' => 'CHF', 'value' => '4.95'],
-            'goods' => [
+            'shippingFee' => ['value' => 4.95],
+            'customsGoods' => [
                 [
                     'code' => '61091000',
                     'description' => 'T-shirt',
                     'origin' => 'NL',
-                    'quantity' => '2',
-                    'value' => '39.9',
-                    'weight' => '0.4',
+                    'quantity' => 2,
+                    'value' => 39.9,
+                    'weight' => 0.4,
                 ],
             ],
         ], $declaration->toArray());

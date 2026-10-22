@@ -4,6 +4,11 @@ All notable changes to `dhlparcel-php-api` will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- `CustomsDeclaration` resource (with `CustomsDeclarationGood`) sent as `customsDeclaration` in `POST /shipments`, for non-EU shipments.
+- `taxReferences` (VAT, EORI, VOEC, UID) on the shipper and receiver via `TaxReference`.
+- `customs_declaration_id` on the created `Shipment`.
+
 ## [v1.5.0] - 2021-05-28
 
 - Add support for evening delivery and extra assurance. [`63`](https://github.com/mvdnbrk/dhlparcel-php-api/pull/63)

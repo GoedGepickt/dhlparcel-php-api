@@ -16,10 +16,13 @@ class Shipment extends BaseResource
     /** @var string */
     public $label_id;
 
+    /** @var string|null */
+    public $customs_declaration_id;
+
     /** @var \Illuminate\Support\Collection */
     public $pieces;
 
-    /** @var ShipmentResource */
+    /** @var ShipmentResource|null Only set when DHL created a return label. */
     public $returnShipment;
 
     public function __construct(array $attributes = [])

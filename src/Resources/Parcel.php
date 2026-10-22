@@ -22,6 +22,9 @@ class Parcel extends BaseResource
     /** @var EntrySummaryDeclaration|null */
     public $entrySummaryDeclaration = null;
 
+    /** @var CustomsDeclaration|null */
+    public $customsDeclaration = null;
+
     public function __construct(array $attributes = [])
     {
         $this->options = new ShipmentOptions;
@@ -242,6 +245,21 @@ class Parcel extends BaseResource
         return $this;
     }
 
+    /**
+     * @param CustomsDeclaration|array|null $value
+     * @return self
+     */
+    public function setCustomsDeclarationAttribute($value): self
+    {
+        if (is_array($value)) {
+            $value = new CustomsDeclaration($value);
+        }
+
+        $this->customsDeclaration = $value;
+
+        return $this;
+    }
+
     public function toArray(): array
     {
         return collect([
@@ -249,6 +267,7 @@ class Parcel extends BaseResource
             'shipper'                 => $this->sender->toArray(),
             'options'                 => $this->options->toArray(),
             'entrySummaryDeclaration' => $this->entrySummaryDeclaration ? $this->entrySummaryDeclaration->toArray() : null,
+            'customsDeclaration'      => $this->customsDeclaration ? $this->customsDeclaration->toArray() : null,
             'pieces'                  => $this->pieces->toArray(),
         ])
             ->when(!is_null($this->reference_identifier), function ($collection) {

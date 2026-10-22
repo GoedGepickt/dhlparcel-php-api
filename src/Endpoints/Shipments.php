@@ -22,6 +22,7 @@ class Shipments extends BaseEndpoint implements ShouldAuthenticate
             'id' => $response->shipmentId,
             'barcode' => $response->pieces[0]->trackerCode,
             'label_id' => $response->pieces[0]->labelId,
+            'customs_declaration_id' => $response->customsDeclarationId ?? null,
         ]);
 
         collect($response->pieces)->each(function ($item) use ($shipment) {
